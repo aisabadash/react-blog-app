@@ -1,6 +1,15 @@
 import { Container, Toolbar, Typography } from "@mui/material";
+import { setToolbarTitle } from "../features/toolbar/toolbarSlice";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 const Posts = () => {
+   const dispatch = useDispatch();
+
+   useEffect(()=>{
+      dispatch(setToolbarTitle("All posts"));
+   },[]);
+
    return (
       <Container>
          <Toolbar/>
