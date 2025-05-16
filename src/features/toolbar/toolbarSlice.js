@@ -14,7 +14,5 @@ const toolbarSlice = createSlice({
    },
 });
 
-// console.log(toolbarSlice);
-
 export const {setToolbarTitle} = toolbarSlice.actions;
 export default toolbarSlice.reducer;
