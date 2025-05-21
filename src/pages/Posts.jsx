@@ -7,20 +7,22 @@ import PostCard from "../components/PostCard";
 import PostSpeedDail from "../components/PostsSpeedDail";
 import SearchInput from "../components/SearchInput";
 import { setSearchQuery } from "../features/search/searchSlice";
+import useDebounce from "../hooks/useDebounce";
 
 
 const Posts = () => {
    const dispatch = useDispatch();
    const {items, isLoading, error} = useSelector((store) => store.posts);
    const {query} = useSelector((store) => store.search);
+   const debounceQuery = useDebounce(query, 600);
 
    useEffect(()=>{
       dispatch(setToolbarTitle("All posts"));
    },[]);
 
    useEffect(()=> {
-      dispatch(fetchPosts(query));
-   }, [query]);
+      dispatch(fetchPosts(debounceQuery));
+   }, [debounceQuery]);
 
    const setSearchValue = (value) => {
       dispatch(setSearchQuery(value));
