@@ -37,7 +37,6 @@ const Sidebar = () => {
                      {theme.palette.mode === "dark" ? <Brightness7  /> : <Brightness4  />}
                   </IconButton>
                </Box>
-
             </Toolbar>
          </AppBar>
          <Drawer anchor="left" open={open} onClick={toggleMenu}>

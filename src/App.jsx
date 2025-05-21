@@ -15,7 +15,6 @@ function App() {
     palette: {
       mode: mode,
       primary: {
-        // main: "#2196f3",
         main: blue[500],
       },
     },

@@ -1,4 +1,4 @@
-import { Box, Button, Container, Paper, Stack, Toolbar, Typography } from "@mui/material";
+import { Button, Container, Paper, Stack, Toolbar, Typography } from "@mui/material";
 import { setToolbarTitle } from "../features/toolbar/toolbarSlice";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
