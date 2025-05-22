@@ -7,6 +7,7 @@ import NewPost from './pages/NewPost';
 import Sidebar from './components/Sidebar';
 import { useSelector } from 'react-redux';
 import { blue } from '@mui/material/colors';
+import Post from './pages/Post';
 
 function App() {
   const {mode} = useSelector((store) => store.theme);
@@ -29,6 +30,7 @@ function App() {
             <Route index path="/" element={<Home/>}></Route>
             <Route path="/posts">
               <Route index element={<Posts/>}/>
+              <Route path=":id" element={<Post/>}/>
               <Route path="create" element={<NewPost/>}/>
             </Route>
           </Routes>

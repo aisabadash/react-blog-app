@@ -1,35 +1,70 @@
-import { Card, CardHeader, CardContent, CardActions, IconButton, Avatar, Typography } from "@mui/material";
+import { Card, CardHeader, CardContent, CardActions, IconButton, Avatar, Typography, Skeleton } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { red } from "@mui/material/colors";
+
+import { useDispatch, useSelector } from "react-redux";
+import { deletePost } from "../features/posts/postsSlice";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const PostCard = ({post}) => {
+   const dispatch = useDispatch();
+   const navigate = useNavigate();
+   const {isLoading} = useSelector((store) => store.posts);
+   // const [isLoading, setIsLoading] = useState(true);
    
    return (
       <Card>
          <CardHeader
             avatar={
-               <Avatar aria-label="post title">
-                  {post.title[0].toUpperCase()}
-               </Avatar>
+               isLoading ? (
+                  <Skeleton animation="wave" variant="circular" width={40} height={40} />
+               ) : (
+                  <Avatar aria-label="post title">
+                     {post.title[0].toUpperCase()}
+                  </Avatar>
+               )               
             }
             action={
-               <IconButton aria-label="delete post">
-                  <DeleteIcon sx={{ color: red[500] }} />
-               </IconButton>
+               isLoading ? (null) : (
+                  <IconButton aria-label="delete post" onClick={()=>{dispatch(deletePost(post.id));}}>
+                     <DeleteIcon color="error" />
+                  </IconButton>
+               )
             }
-            title={post.title}
-            subheader={`User ${post.userId}`}
+            title={
+               isLoading ? (
+                  <Skeleton animation="wave" height={10} width="80%" sx={{marginBottom: "6"}} />
+               ) : (
+                   post.title
+               )              
+            }
+            subheader={
+               isLoading ? (
+                  <Skeleton animation="wave" height={10} width="40%" />
+               ) : (                  
+                  `User ${post.userId}`
+               )               
+            }
             />
          <CardContent>
-            <Typography variant="body2">
-               {post.body.length <= 75 ? post.body : (post.body.substr(0, 75) + "...")}
-            </Typography>
+            {isLoading ? (
+               <React.Fragment>
+                  <Skeleton animation="wave" height={10} sx={{marginBottom: "6"}} />
+                  <Skeleton animation="wave" height={10} width="80%" />
+               </React.Fragment>
+            ) : (
+               <Typography variant="body2">
+                  {post.body.length <= 75 ? post.body : (post.body.substr(0, 75) + "...")}
+               </Typography>
+            )}
          </CardContent>
          <CardActions disableSpacing>
-            <IconButton aria-label="post details">
-               <ArrowForwardIcon />
-            </IconButton>
+            {isLoading ? (null) : (
+               <IconButton aria-label="post details" onClick={() => navigate(`/posts/${post.id}`)}>
+                  <ArrowForwardIcon />
+               </IconButton>
+            )}
          </CardActions>
       </Card>
    );
