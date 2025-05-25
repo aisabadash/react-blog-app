@@ -1,17 +1,25 @@
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { deletePost } from "../features/posts/postsSlice";
+import { useNavigate } from "react-router-dom";
 import { Card, CardHeader, CardContent, CardActions, IconButton, Avatar, Typography, Skeleton } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-
-import { useDispatch, useSelector } from "react-redux";
-import { deletePost } from "../features/posts/postsSlice";
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { showSnackbar } from "../features/snackbar/snackbarSlice";
 
 const PostCard = ({post}) => {
    const dispatch = useDispatch();
    const navigate = useNavigate();
    const {isLoading} = useSelector((store) => store.posts);
-   // const [isLoading, setIsLoading] = useState(true);
+
+   const handleDeletePost = async (id) => {
+      try {
+         const data = await dispatch(deletePost(id)).unwrap();
+         dispatch(showSnackbar({ message: "The post was successfully deleted!", severity: "success" }));
+      } catch (error) {
+         dispatch(showSnackbar({ message: `An error occurred while deleting the post: ${error}`, severity: "error" }));
+      }
+   };
    
    return (
       <Card>
@@ -21,13 +29,13 @@ const PostCard = ({post}) => {
                   <Skeleton animation="wave" variant="circular" width={40} height={40} />
                ) : (
                   <Avatar aria-label="post title">
-                     {post.title[0].toUpperCase()}
+                     {post.title?.charAt(0).toUpperCase()}
                   </Avatar>
                )               
             }
             action={
                isLoading ? (null) : (
-                  <IconButton aria-label="delete post" onClick={()=>{dispatch(deletePost(post.id));}}>
+                  <IconButton aria-label="delete post" onClick={() => handleDeletePost(post.id)}>
                      <DeleteIcon color="error" />
                   </IconButton>
                )
@@ -55,7 +63,7 @@ const PostCard = ({post}) => {
                </React.Fragment>
             ) : (
                <Typography variant="body2">
-                  {post.body.length <= 75 ? post.body : (post.body.substr(0, 75) + "...")}
+                  {post.body?.length <= 75 ? post.body : (post.body.substr(0, 75) + "...")}
                </Typography>
             )}
          </CardContent>

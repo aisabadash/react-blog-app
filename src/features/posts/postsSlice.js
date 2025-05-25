@@ -12,7 +12,7 @@ export const fetchPosts = createAsyncThunk(
       try {
          const response = await fetch("https://jsonplaceholder.typicode.com/posts?_limit=12");
          if (!response.ok) {
-            throw new Error("An error to fetching data");
+            throw new Error("An error of fetching data");
          }
          const data = await response.json();
          return data.filter((item) => item.title.toLowerCase().includes(query.toLowerCase()));
@@ -31,11 +31,14 @@ export const deletePost = createAsyncThunk(
             method: "DELETE",
          });
 
-         if(!response.ok) {
+         if(!response.ok) {          
             throw new Error("Can't delete post. Server error");
          }
          
+         const data = await response.json();
          dispatch(removePost(id));
+         return data;
+
       } catch (error) {
          return rejectWithValue(error.message);
       }

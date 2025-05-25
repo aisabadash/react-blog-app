@@ -8,6 +8,7 @@ import Sidebar from './components/Sidebar';
 import { useSelector } from 'react-redux';
 import { blue } from '@mui/material/colors';
 import Post from './pages/Post';
+import AppSnackbar from './components/AppSnackbar';
 
 function App() {
   const {mode} = useSelector((store) => store.theme);
@@ -26,6 +27,7 @@ function App() {
       <CssBaseline />
       <Router>      
           <Sidebar/>
+          <AppSnackbar/>
           <Routes>
             <Route index path="/" element={<Home/>}></Route>
             <Route path="/posts">

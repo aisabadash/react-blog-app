@@ -9,7 +9,7 @@ const SearchInput = ({id, placeholder, searchValue, setSearchValue}) => {
             placeholder={placeholder}
             type="search" 
             fullWidth
-            sx={{ my: 2 }}
+            sx={{ marginBottom: "1rem" }}
             slotProps={{
                input: {
                   startAdornment: (

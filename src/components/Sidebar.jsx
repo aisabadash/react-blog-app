@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from "react-redux";
-import { AppBar, Box, Drawer, IconButton, List, ListItem, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, Drawer, IconButton, List, ListItem, Stack, Toolbar, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Brightness4, Brightness7 } from '@mui/icons-material';
 import { useTheme } from '@emotion/react';
 import { toggleThemeMode } from '../features/theme/themeSlice';
 import ListItemLink from './ListItemLink';
 import menu from '../menu';
+import { useLocation, useMatch } from 'react-router-dom';
+import CommentBadge from './CommentBadge';
 
 const Sidebar = () => {
 
@@ -15,6 +17,9 @@ const Sidebar = () => {
    const {title} = useSelector((store) => store.toolbar);
    const dispatch = useDispatch();
    const theme = useTheme();
+
+   // const matchPostPage = useMatch("/post/:id");
+   const matchPostPage = /^\/posts\/\d+$/.test(location.pathname);
 
    const toggleMenu = () => {
       setOpen(!open);
@@ -31,11 +36,15 @@ const Sidebar = () => {
                <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{mr:1}} onClick={toggleMenu}>
                   <MenuIcon/>
                </IconButton>
-               <Box sx={{ flex:"1 1 auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+               <Box sx={{width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <Typography variant="h6" component="div">{title}</Typography>
-                  <IconButton color="inherit" onClick={toggleTheme}>
-                     {theme.palette.mode === "dark" ? <Brightness7  /> : <Brightness4  />}
-                  </IconButton>
+
+                  <Stack direction="row">
+                     <IconButton color="inherit" onClick={toggleTheme}>
+                        {theme.palette.mode === "dark" ? <Brightness7  /> : <Brightness4  />}
+                     </IconButton>
+                     {matchPostPage ? <CommentBadge/> : null}
+                  </Stack>
                </Box>
             </Toolbar>
          </AppBar>
@@ -51,7 +60,6 @@ const Sidebar = () => {
             </Box>
          </Drawer>
       </Box>
-
    );
 };
 
