@@ -8,17 +8,23 @@ import { useTheme } from '@emotion/react';
 import { toggleThemeMode } from '../features/theme/themeSlice';
 import ListItemLink from './ListItemLink';
 import menu from '../menu';
-import { useLocation, useMatch } from 'react-router-dom';
+import { matchPath, useLocation, useMatch } from 'react-router-dom';
 import CommentBadge from './CommentBadge';
 import CommentsDialog from './CommentsDialog';
+
+
+import CommentIcon from '@mui/icons-material/Comment';
+import { Badge } from '@mui/material';
+import { openDialog } from '../features/dialog/dialogSlice';
 
 const Sidebar = () => {
 
    const [open, setOpen] = useState(false);
    const {title} = useSelector((store) => store.toolbar);
+   const {items, isLoading, error} = useSelector((store) => store.comments);
    const dispatch = useDispatch();
    const theme = useTheme();
-   const buttonRef = useRef();
+   const buttonRef = useRef(null);
 
    // const matchPostPage = useMatch("/post/:id");
    const matchPostPage = /^\/posts\/\d+$/.test(location.pathname);
@@ -45,12 +51,30 @@ const Sidebar = () => {
                      <IconButton color="inherit" onClick={toggleTheme}>
                         {theme.palette.mode === "dark" ? <Brightness7  /> : <Brightness4  />}
                      </IconButton>
-                     {matchPostPage ? <CommentBadge buttonRef={buttonRef}/> : null}                     
+                     {/* {matchPostPage ? <CommentBadge buttonRef={buttonRef}/> : null} */}
+
+
+                     {matchPostPage ? 
+                        <IconButton ref={buttonRef} color="inherit" aria-label="post comments" onClick={() => dispatch(openDialog())}>
+                           <Badge color="error" badgeContent={items.length || 0} showZero >
+                              <CommentIcon />
+                           </Badge>
+                        </IconButton>
+                     : null }
+
+
                   </Stack>
                </Box>
             </Toolbar>
          </AppBar>
-         <CommentsDialog buttonRef={buttonRef}/>
+
+
+
+         {/* <CommentsDialog buttonRef={buttonRef}/> */}
+
+
+
+
          <Drawer anchor="left" open={open} onClick={toggleMenu}>
             <Box sx={{ width: 200 }}>
                <List>
