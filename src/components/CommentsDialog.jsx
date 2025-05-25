@@ -1,6 +1,7 @@
 import { CircularProgress, Dialog, DialogContent, DialogContentText, DialogTitle, List, ListItem, ListItemText, Typography, Fade } from "@mui/material";
 import { closeDialog } from "../features/dialog/dialogSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const CommentsDialog = ({buttonRef}) => {
    const dispatch = useDispatch();
@@ -18,6 +19,15 @@ const CommentsDialog = ({buttonRef}) => {
     buttonRef.current?.focus();
   }, 0);
 };
+
+   useEffect(() => {
+   if (!open) {
+      const timer = setTimeout(() => {
+         buttonRef.current?.focus();
+      }, 0);
+      return () => clearTimeout(timer);
+   }
+   }, [open]);
   
    return (
       <Dialog
