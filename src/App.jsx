@@ -25,7 +25,7 @@ function App() {
   return (
     <ThemeProvider theme={appTheme}>
       <CssBaseline />
-      <Router>      
+      <Router basename="/react-blog-app">      
           <Sidebar/>
           <AppSnackbar/>
           <Routes>

@@ -13,7 +13,7 @@ npm install
 ```bash
 npm run dev
 ```
-The application will be available at: http://localhost:5173  
+The application will be available at: http://localhost:5173/react-blog-app/  
 ⚠️ Make sure you have Node.js version ≥ 18.x installed.
 
 
