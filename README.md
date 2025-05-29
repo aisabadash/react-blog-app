@@ -33,6 +33,22 @@ The application will be available at: http://localhost:5173
 --index.css                  
 --main.jsx                 # App entry point  
 
+## Folder Structure
+<pre>
+-src/
+   --assets/                     # Static files
+   --components/                 # UI components
+   --config/                     # Config files
+      ---menu.jsx                # Application menu definitions
+      ---post-create-steps.jsx   # Step definitions for the post creation wizard
+   --hooks/                      # Custom React hooks
+   --pages/                      # Route-level page components
+   --store/                      # Redux store configuration
+      ---store.jsx
+      ---features/               # Redux slices
+   --App.jsx
+   --index.css
+   --main.jsx                    # App entry point </pre>
 
 # TODO
 - Migrate async logic to RTK Query;
