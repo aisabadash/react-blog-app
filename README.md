@@ -1,5 +1,8 @@
 # React Blog Application
 Simple SPA to create and browse posts, built with React, Redux Toolkit, React Router, and Material UI.
+**API**: This project uses the free fake API from [https://jsonplaceholder.typicode.com/](https://jsonplaceholder.typicode.com/)
+
+**Live Demo**: [https://aisabadash.github.io/react-blog-app/](https://aisabadash.github.io/react-blog-app/)
 
 ## Installation
 
