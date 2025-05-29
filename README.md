@@ -19,8 +19,8 @@ The application will be available at: http://localhost:5173
 
 # Folder Structure
 -src/  
---assets/                  # Static files  
---components/              # UI components  
+  --assets/                # Static files  
+  --components/            # UI components  
 --config/                  # Config files  
 ---menu.jsx                # Application menu definitions             
 ---post-create-steps.jsx   # Step definitions for the post creation wizard  
