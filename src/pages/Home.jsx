@@ -1,5 +1,5 @@
 import { Button, Container, Paper, Stack, Toolbar, Typography } from "@mui/material";
-import { setToolbarTitle } from "../features/toolbar/toolbarSlice";
+import { setToolbarTitle } from "../store/features/toolbar/toolbarSlice";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 
@@ -11,18 +11,18 @@ const Home = () => {
    const dispatch = useDispatch();
    const navigate = useNavigate();
 
-   useEffect(()=>{
+   useEffect(() => {
       dispatch(setToolbarTitle("DOiT MVP"));
-   },[]);
+   }, []);
 
    return (
       <Container sx={{
          display: "flex",
          flexDirection: "column",
          alignItems: "center",
-         height:"100vh"
+         height: "100vh"
       }}>
-         <Toolbar/>
+         <Toolbar />
          <Paper elevation={0} sx={{
             p: 2,
             my: 4,

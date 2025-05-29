@@ -1,16 +1,16 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deletePost } from "../features/posts/postsSlice";
+import { deletePost } from "../store/features/posts/postsSlice";
 import { useNavigate } from "react-router-dom";
 import { Card, CardHeader, CardContent, CardActions, IconButton, Avatar, Typography, Skeleton } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { showSnackbar } from "../features/snackbar/snackbarSlice";
+import { showSnackbar } from "../store/features/snackbar/snackbarSlice";
 
-const PostCard = ({post}) => {
+const PostCard = ({ post }) => {
    const dispatch = useDispatch();
    const navigate = useNavigate();
-   const {isLoading} = useSelector((store) => store.posts);
+   const { isLoading } = useSelector((store) => store.posts);
 
    const handleDeletePost = async (id) => {
       try {
@@ -20,7 +20,7 @@ const PostCard = ({post}) => {
          dispatch(showSnackbar({ message: `An error occurred while deleting the post: ${error}`, severity: "error" }));
       }
    };
-   
+
    return (
       <Card>
          <CardHeader
@@ -31,7 +31,7 @@ const PostCard = ({post}) => {
                   <Avatar aria-label="post title">
                      {post.title?.charAt(0).toUpperCase()}
                   </Avatar>
-               )               
+               )
             }
             action={
                isLoading ? (null) : (
@@ -42,23 +42,23 @@ const PostCard = ({post}) => {
             }
             title={
                isLoading ? (
-                  <Skeleton animation="wave" height={10} width="80%" sx={{marginBottom: "6"}} />
+                  <Skeleton animation="wave" height={10} width="80%" sx={{ marginBottom: "6" }} />
                ) : (
-                   post.title
-               )              
+                  post.title
+               )
             }
             subheader={
                isLoading ? (
                   <Skeleton animation="wave" height={10} width="40%" />
-               ) : (                  
+               ) : (
                   `User ${post.userId}`
-               )               
+               )
             }
-            />
+         />
          <CardContent>
             {isLoading ? (
                <React.Fragment>
-                  <Skeleton animation="wave" height={10} sx={{marginBottom: "6"}} />
+                  <Skeleton animation="wave" height={10} sx={{ marginBottom: "6" }} />
                   <Skeleton animation="wave" height={10} width="80%" />
                </React.Fragment>
             ) : (

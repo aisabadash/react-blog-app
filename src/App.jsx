@@ -4,10 +4,10 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Posts from './pages/Posts';
 import Home from './pages/Home';
 import NewPost from './pages/NewPost';
-import Sidebar from './components/Sidebar';
+import Post from './pages/Post';
+import Sidebar from './components/AppSidebar';
 import { useSelector } from 'react-redux';
 import { blue } from '@mui/material/colors';
-import Post from './pages/Post';
 import AppSnackbar from './components/AppSnackbar';
 
 function App() {

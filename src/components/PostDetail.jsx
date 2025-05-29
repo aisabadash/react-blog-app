@@ -3,12 +3,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { deletePost } from "../features/posts/postsSlice";
-import { showSnackbar } from "../features/snackbar/snackbarSlice";
+import { deletePost } from "../store/features/posts/postsSlice";
+import { showSnackbar } from "../store/features/snackbar/snackbarSlice";
 
 
 const PostDetail = () => {
-   const {item} = useSelector((store) => store.post);
+   const { item } = useSelector((store) => store.post);
    const dispatch = useDispatch();
    const navigate = useNavigate();
 
@@ -32,7 +32,7 @@ const PostDetail = () => {
             }
             title={item.title}
             subheader={`User ${item.userId}`}
-            />
+         />
          <CardContent>
             <Typography variant="body2">
                {item.body}

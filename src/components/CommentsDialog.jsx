@@ -1,49 +1,23 @@
-import { CircularProgress, Dialog, DialogContent, DialogContentText, DialogTitle, List, ListItem, ListItemText, Typography, Fade } from "@mui/material";
-import { closeDialog } from "../features/dialog/dialogSlice";
+import { CircularProgress, Dialog, DialogContent, DialogContentText, DialogTitle, List, ListItem, ListItemText, Typography } from "@mui/material";
+import { closeDialog } from "../store/features/comments-dialog/commentsDialogSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 
-const CommentsDialog = ({buttonRef}) => {
+const CommentsDialog = () => {
    const dispatch = useDispatch();
-   const {open} = useSelector((store) => store.dialog);
-   const {items, isLoading, error} = useSelector((store) => store.comments);
+   const { open } = useSelector((store) => store.dialog);
+   const { items, isLoading, error } = useSelector((store) => store.comments);
 
-   const handleClose = () => {
-      dispatch(closeDialog());
-   }
-
-   const handleExited = () => {
-  setTimeout(() => {
-   console.log(buttonRef);
-   
-    buttonRef.current?.focus();
-  }, 0);
-};
-
-   useEffect(() => {
-   if (!open) {
-      const timer = setTimeout(() => {
-         buttonRef.current?.focus();
-      }, 0);
-      return () => clearTimeout(timer);
-   }
-   }, [open]);
-  
    return (
       <Dialog
          open={open}
          scroll="paper"
-         onClose={handleClose}         
-         slots={{ transition: Fade }}
-         slotProps={{
-            transition: {
-               onExited: handleExited
-            }
-         }}
+         onClose={() => dispatch(closeDialog())}
          fullWidth
          maxWidth="sm"
+         closeAfterTransition={false}
       >
          <DialogTitle id="scroll-dialog-title">Comments</DialogTitle>
+
          <DialogContent dividers={true}>
             {isLoading && <CircularProgress />}
             {error && <Typography color="error">{error}</Typography>}
@@ -61,6 +35,7 @@ const CommentsDialog = ({buttonRef}) => {
                </List>
             )}
          </DialogContent>
+
       </Dialog>
    );
 };

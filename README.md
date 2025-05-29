@@ -1,12 +1,40 @@
-# React + Vite
+# React Blog Application
+Simple SPA to create and browse posts, built with React, Redux Toolkit, React Router, and Material UI.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Installation
 
-Currently, two official plugins are available:
+```bash
+git clone https://github.com/your-username/react-blog-app.git
+cd react-blog-app
+npm install
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Run (local environment)
 
-## Expanding the ESLint configuration
+```bash
+npm run dev
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+The application will be available at: http://localhost:5173
+⚠️ Make sure you have Node.js version ≥ 18.x installed.
+
+# Folder Structure
+-src/
+--assets/                  # Static files
+--components/              # UI components
+--config/                  # Config files
+---menu.jsx                # Application menu definitions           
+---post-create-steps.jsx   # Step definitions for the post creation wizard
+--hooks/                   # Custom React hooks
+--pages/                   # Route-level page components
+--store/                   # Redux store configuration
+---store.jsx               
+---features/               # Redux slices
+--App.jsx                  
+--index.css
+--main.jsx                 # App entry point
+
+
+# TODO
+- Migrate async logic to RTK Query;
+- Add unit test coverage;
+- Add user authentication;
+- Add i18n language support

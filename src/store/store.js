@@ -6,7 +6,9 @@ import searchReducer from "./features/search/searchSlice";
 import postReducer from "./features/post/postSlice";
 import snackbarReducer from "./features/snackbar/snackbarSlice";
 import commentsReducer from "./features/comments/commentsSlice";
-import dialogReducer from "./features/dialog/dialogSlice";
+import commentsdialogReducer from "./features/comments-dialog/commentsDialogSlice";
+import previewDialogReducer from "./features/preview-dialog/previewDialogSlice";
+import newPostReducer from "./features//new-post/newPostSlice";
 
 export const store = configureStore({
    reducer: {
@@ -17,6 +19,8 @@ export const store = configureStore({
       post: postReducer,
       snackbar: snackbarReducer,
       comments: commentsReducer,
-      dialog: dialogReducer,
+      dialog: commentsdialogReducer,
+      previewDialog: previewDialogReducer,
+      newPost: newPostReducer,
    },
 });
