@@ -4,7 +4,7 @@ Simple SPA to create and browse posts, built with React, Redux Toolkit, React Ro
 ## Installation
 
 ```bash
-git clone https://github.com/your-username/react-blog-app.git
+git clone https://github.com/aisabadash/react-blog-app.git
 cd react-blog-app
 npm install
 ```
@@ -13,7 +13,7 @@ npm install
 ```bash
 npm run dev
 ```
-The application will be available at: http://localhost:5173
+The application will be available at: http://localhost:5173  
 ⚠️ Make sure you have Node.js version ≥ 18.x installed.
 
 
