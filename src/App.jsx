@@ -10,6 +10,10 @@ import { useSelector } from 'react-redux';
 import { blue } from '@mui/material/colors';
 import AppSnackbar from './components/AppSnackbar';
 
+const basename = import.meta.env.MODE === 'production'
+  ? import.meta.env.VITE_BASE_PATH
+  : '/';
+
 function App() {
   const {mode} = useSelector((store) => store.theme);
 
@@ -25,7 +29,7 @@ function App() {
   return (
     <ThemeProvider theme={appTheme}>
       <CssBaseline />
-      <Router basename="/react-blog-app">      
+      <Router basename={basename}>      
           <Sidebar/>
           <AppSnackbar/>
           <Routes>
