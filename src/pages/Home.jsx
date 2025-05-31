@@ -12,7 +12,7 @@ const Home = () => {
    const navigate = useNavigate();
 
    useEffect(() => {
-      dispatch(setToolbarTitle("DOiT MVP"));
+      dispatch(setToolbarTitle("Blog App"));
    }, []);
 
    return (
@@ -33,8 +33,8 @@ const Home = () => {
             alignItems: "center",
             textAlign: "center"
          }}>
-            <Typography variant="h4" gutterBottom>Wellcome to DOiT MVP</Typography>
-            <Typography variant="subtitle1" gutterBottom>We are working on the MVP of an educational platform. Join the team!</Typography>
+            <Typography variant="h4" gutterBottom>Wellcome to Blog App</Typography>
+            <Typography variant="subtitle1" gutterBottom>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Similique, aspernatur sunt dolores temporibus ex veritatis dolorem explicabo magnam quod, nihil assumenda eligendi doloremque quo autem eius exercitationem quia facilis laudantium.</Typography>
             <Stack direction="row" spacing={2}>
                <Button variant="contained" startIcon={<ListIcon />} onClick={() => navigate("/posts")}>View posts</Button>
                <Button variant="outlined" startIcon={<AddCircleIcon />} onClick={() => navigate("/posts/create")}>Add post</Button>
