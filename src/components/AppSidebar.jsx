@@ -17,7 +17,6 @@ const AppSidebar = () => {
    const dispatch = useDispatch();
    const theme = useTheme();
 
-   // const matchPostPage = /^\/posts\/\d+$/.test(location.pathname);
    const matchPostPage = /\/posts\/\d+$/.test(location.pathname);
 
    const toggleMenu = () => {
