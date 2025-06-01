@@ -6,9 +6,11 @@ import Home from './pages/Home';
 import NewPost from './pages/NewPost';
 import Post from './pages/Post';
 import Sidebar from './components/AppSidebar';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { blue } from '@mui/material/colors';
 import AppSnackbar from './components/AppSnackbar';
+import { useEffect } from 'react';
+import { fetchPosts } from './store/features/posts/postsSlice';
 
 const basename = import.meta.env.MODE === 'production'
   ? import.meta.env.VITE_BASE_PATH
@@ -16,6 +18,7 @@ const basename = import.meta.env.MODE === 'production'
 
 function App() {
   const {mode} = useSelector((store) => store.theme);
+  const dispatch = useDispatch();
 
   const appTheme = createTheme({
     palette: {
@@ -25,6 +28,10 @@ function App() {
       },
     },
   });
+
+  useEffect(() => {
+    dispatch(fetchPosts());
+  }, []);
 
   return (
     <ThemeProvider theme={appTheme}>

@@ -7,16 +7,40 @@ import SaveIcon from '@mui/icons-material/Save';
 import PreviewDialog from "../components/PreviewDialog";
 import { openDialog } from "../store/features/preview-dialog/previewDialogSlice";
 import { updateNewPost, setStep, setErrors, resetNewPost } from "../store/features/new-post/newPostSlice";
+import { addNewPost } from "../store/features/posts/postsSlice";
+import { showSnackbar } from "../store/features/snackbar/snackbarSlice";
 
 const NewPost = () => {
    const { item, errors, step } = useSelector((store) => store.newPost);
    const dispatch = useDispatch();
 
    useEffect(() => {
+      dispatch(setToolbarTitle("New post"));
+   }, []);
+   
+   useEffect(() => {
       dispatch(resetNewPost());
    }, []);
 
-   const handleNext = () => {
+   useEffect(() => {
+      if (step === 2) {
+         dispatch(openDialog());
+      }
+   },[step]);
+
+   const savePost = async () => {
+      try {
+         const data = await dispatch(addNewPost(item)).unwrap();
+         dispatch(setStep(0));
+         dispatch(resetNewPost());
+
+         dispatch(showSnackbar({ message: "The post was successfully added!", severity: "success" }));
+      } catch (error) {
+         dispatch(showSnackbar({ message: `An error occurred while adding the post: ${error}`, severity: "error" }));
+      }
+   }
+
+   const handleNext = () => {     
       if (step === 0 && item.title.trim() === "") {
          dispatch(setErrors({ title: true }));
          return;
@@ -24,11 +48,12 @@ const NewPost = () => {
       if (step === 1 && item.body.trim() === "") {
          dispatch(setErrors({ body: true }));
          return;
-      }
-      if (step === 2) {
-         dispatch(openDialog());
+      }      
+      if (step === 3) {
+         savePost();
          return;
       }
+      
       dispatch(setErrors({ title: false, body: false }));
       dispatch(setStep(step + 1));
    };
@@ -36,11 +61,8 @@ const NewPost = () => {
    const handleBack = () => {
       if (step === 0) return;
       dispatch(setStep(step - 1));
-   };
 
-   useEffect(() => {
-      dispatch(setToolbarTitle("New post"));
-   }, []);
+   };
 
    return (
       <Container>
@@ -73,7 +95,7 @@ const NewPost = () => {
                            ),
                         },
                      }}
-                     onChange={(e) => {dispatch(updateNewPost({ title: e.target.value }))}}
+                     onChange={(e) => {dispatch(updateNewPost({ userId: 1, title: e.target.value }))}}
                      error={errors.title}
                      helperText={errors.title && "Title is required"}
                      autoFocus

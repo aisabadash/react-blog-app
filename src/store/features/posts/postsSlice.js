@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createSelector } from "@reduxjs/toolkit";
 
 const initialState = {
    items: [],
@@ -8,14 +8,15 @@ const initialState = {
 
 export const fetchPosts = createAsyncThunk(
    "posts/fetchPosts",
-   async (query, {rejectWithValue}) => {
+   async (query = "", {rejectWithValue}) => {
       try {
          const response = await fetch("https://jsonplaceholder.typicode.com/posts?_limit=12");
          if (!response.ok) {
             throw new Error("An error of fetching data");
          }
          const data = await response.json();
-         return data.filter((item) => item.title.toLowerCase().includes(query.toLowerCase()));
+         // return data.filter((item) => item.title.toLowerCase().includes(query.toLowerCase()));
+         return data;
       }
       catch (error) {
          return rejectWithValue(error.message);
@@ -90,7 +91,7 @@ const postsSlice = createSlice({
       },
       removePost(state, action) {
          state.items = state.items.filter((item) => item.id !== action.payload);         
-      },
+      }
    },
    extraReducers: (builder) => {
       builder
@@ -112,6 +113,17 @@ const postsSlice = createSlice({
          .addCase(addNewPost.rejected, setError)
    },
 });
+
+export const selectFilteredPosts = createSelector(
+   [(state) => state.posts.items, (state) => state.search.query],
+   (items, query) => {
+      if (!query) return items;
+
+      return items.filter((item) =>
+         item.title.toLowerCase().includes(query.toLowerCase())
+      );
+   }
+);
 
 const {addPost, removePost} = postsSlice.actions;
 export default postsSlice.reducer;

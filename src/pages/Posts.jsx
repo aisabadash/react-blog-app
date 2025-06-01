@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Container, Grid, Toolbar } from "@mui/material";
 import { setToolbarTitle } from "../store/features/toolbar/toolbarSlice";
@@ -9,21 +9,24 @@ import PostSpeedDail from "../components/PostsSpeedDail";
 import SearchInput from "../components/SearchInput";
 import useDebounce from "../hooks/useDebounce";
 
+import { selectFilteredPosts } from "../store/features/posts/postsSlice";
+
 const Posts = () => {
-   const dispatch = useDispatch();
-   const { items, error } = useSelector((store) => store.posts);
+   const dispatch = useDispatch();   
    const { query } = useSelector((store) => store.search);
-   const debounceQuery = useDebounce(query, 600);
-
+   const items = useSelector(selectFilteredPosts);
+   const error = useSelector((store) => store.posts.error);
+   // const { items, error } = useSelector((store) => store.posts);
+   // const debounceQuery = useDebounce(query, 600);   
+   
+   // useEffect(() => {
+   //    dispatch(fetchPosts(debounceQuery));
+   // }, [debounceQuery]);
+      
    useEffect(() => {
-      dispatch(setToolbarTitle("All posts"));
-   }, []);
-
-   useEffect(() => {
-      dispatch(fetchPosts(debounceQuery));
-   }, [debounceQuery]);
-
-   const setSearchValue = (value) => {
+         dispatch(setToolbarTitle("All posts"));
+      }, []);
+      const setSearchValue = (value) => {
       dispatch(setSearchQuery(value));
    }
 

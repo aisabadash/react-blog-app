@@ -31,7 +31,13 @@ const setError = (state, action) => {
 const postSlice = createSlice({
    name: "post",
    initialState,
-   reducers: {},
+   reducers: {
+      resetPost(state) {
+         state.item = {};
+         state.isLoading = false;
+         state.error = null;
+      },
+   },
    extraReducers: (builder) => {
       builder
          .addCase(fetchPost.pending, (state) => {
@@ -47,4 +53,5 @@ const postSlice = createSlice({
    },
 });
 
+export const { resetPost } = postSlice.actions;
 export default postSlice.reducer;

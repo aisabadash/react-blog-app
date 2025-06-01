@@ -1,37 +1,38 @@
 import { Dialog, DialogTitle, DialogContent, DialogActions, Typography, Button, Stack} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { addNewPost } from "../store/features/posts/postsSlice";
 import { closeDialog } from "../store/features/preview-dialog/previewDialogSlice";
-import { resetNewPost, setStep } from "../store/features/new-post/newPostSlice";
-import { showSnackbar } from "../store/features/snackbar/snackbarSlice";
+import { setStep } from "../store/features/new-post/newPostSlice";
 
 const PreviewDialog = () => {
-
    const { open } = useSelector((store) => store.previewDialog);
-   const { item } = useSelector((store) => store.newPost);
+   const { item, step } = useSelector((store) => store.newPost);
    const dispatch = useDispatch();
 
    const onClose = () => dispatch(closeDialog());
 
-   const onConfirm = async () => {
-      try {
-         const data = await dispatch(addNewPost(item)).unwrap();
-         dispatch(closeDialog());
-         dispatch(setStep(0));
-         dispatch(resetNewPost());
-         dispatch(showSnackbar({ message: "The post was successfully added!", severity: "success" }));
-      } catch (error) {
-         dispatch(showSnackbar({ message: `An error occurred while adding the post: ${error}`, severity: "error" }));
-      }
+   const onEdit = () => {
+      dispatch(closeDialog());
+      dispatch(setStep(step - 1));
+   }
+
+   const onConfirm = () => {
+      dispatch(closeDialog());
+      dispatch(setStep(step + 1));
    }
 
    return (
       <Dialog
          open={open}
-         onClose={onClose}
+         onClose={(event, reason) => {
+            if (reason === "backdropClick" || reason === "escapeKeyDown") {
+               return;
+            }
+            onClose();
+         }}
          fullWidth
          maxWidth="sm"
          closeAfterTransition={false}
+         disableEscapeKeyDown
       >
       <DialogTitle>Preview</DialogTitle>
       <DialogContent dividers>
@@ -41,7 +42,7 @@ const PreviewDialog = () => {
          </Stack>
       </DialogContent>
       <DialogActions>
-         <Button onClick={onClose} variant="text">
+         <Button onClick={onEdit} variant="text">
             Edit
          </Button>
          <Button variant="contained" onClick={onConfirm}>
